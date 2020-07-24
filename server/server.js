@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
+const { Socket } = require('dgram');
 
 
 const publicpath = path.join(__dirname, '/../public');
@@ -13,6 +14,15 @@ let io = socketIO(server);
 app.use(express.static(publicpath));
 io.on('connection',(socket)=>{
     console.log('A new user just connected');
+
+    socket.emit('newMessage',{
+        from: "Ruto",
+        text:"My third name"
+    })
+
+    socket.on('createMessage',(message)=>{
+         console.log('createMessage',message);
+    })
 
     socket.on('disconnect',()=>{
         console.log('User was disconnected from the server')
