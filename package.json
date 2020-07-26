@@ -5,20 +5,19 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server/server.js"
-    
   },
   "engines": {
     "node": "14.4.0"
   },
   "author": "Denis kiplangat Ruto",
   "license": "ISC",
-  "devDependencies" : {
-   
+  "devDependencies": {
     "nodemon": "^2.0.4"
   },
   "dependencies": {
+    "expect": "^26.1.0",
     "express": "^4.17.1",
+    "mocha": "^8.0.1",
     "socket.io": "^2.3.0"
   }
-
 }

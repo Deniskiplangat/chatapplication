@@ -2,7 +2,8 @@ const path = require('path');
 const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
-const { Socket } = require('dgram');
+const { getDefaultSettings } = require('http2');
+// const { Socket } = require('dgram');
 
 
 const publicpath = path.join(__dirname, '/../public');
@@ -16,13 +17,28 @@ io.on('connection',(socket)=>{
     console.log('A new user just connected');
 
     socket.emit('newMessage',{
-        from: "Ruto",
-        text:"My third name"
+        from:'Admin',
+        text:'Welcome to the group chat',
+        createdAt:new Date().getTime()
     })
+
+    socket.broadcast.emit('newMessage',{
+        from:'Admin',
+        text:'A new user has joined',
+        createdAt:new Date().getTime()
+    })
+
+   
 
     socket.on('createMessage',(message)=>{
          console.log('createMessage',message);
-    })
+         io.emit('newMessage',{
+             from:message.from,
+             text:message.text,
+             createdAt:new Date().getTime()
+         })
+      
+    });
 
     socket.on('disconnect',()=>{
         console.log('User was disconnected from the server')
